@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.config;
 
 import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.web.builders.*;
@@ -13,7 +14,7 @@ import br.ufscar.dc.dsw.security.UsuarioDetailsServiceImpl;
 
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
@@ -42,22 +43,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		http.csrf().disable();
 		http.authorizeRequests()
 				//Controladores REST
 				.antMatchers("/sites", "/hoteis", "/promocoes").permitAll()
 				.antMatchers("/sites/{\\d+}*", "hoteis/{\\d+}*").permitAll()
 				.antMatchers("/promocoes/{\\d+}*").permitAll()
 				.antMatchers("/hoteis/cidades/{\\w+}*").permitAll()
+				.antMatchers("/hoteis/{\\d+}*").permitAll()
 				.antMatchers("/promocoes/sites/{\\d+}*").permitAll()
 				.antMatchers("/promocoes/hoteis/{\\d+}*").permitAll()
+				.antMatchers("/*").permitAll()
 				
-				//.antMatchers("/", "/index", "/error").permitAll()
-				//.antMatchers("/login/**", "/site/listar", "/site/lista", "/image/**", "/hotel/listar","/hotel/lista").permitAll()
-				//.antMatchers("/admin/**").hasRole("ADMIN")
-				//.antMatchers("/hotel/**").hasRole("HOTEL")
-				//.antMatchers("/site/**").hasRole("SITE")
+				.antMatchers("/", "/index", "/error").permitAll()
+				.antMatchers("/login/**", "/site/listar", "/site/lista", "/image/**", "/hotel/listar","/hotel/lista").permitAll()
+				.antMatchers("/admin/**").permitAll()
+				.antMatchers("/hotel/**").permitAll()
+				.antMatchers("/site/**").permitAll()
 				
-				.anyRequest().authenticated()
+				//.antMatchers(HttpMethod.DELETE,"/hoteis/{\\d+}*").permitAll()
+				
+				.anyRequest().permitAll()
 			.and()	
 				.formLogin().loginPage("/login").permitAll()
 			.and()

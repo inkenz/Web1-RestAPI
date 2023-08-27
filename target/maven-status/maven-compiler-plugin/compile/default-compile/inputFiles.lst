@@ -4,6 +4,7 @@
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/domain/Site.java
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/config/WebSecurityConfig.java
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/validation/UniqueEmail.java
+/home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/controller/HotelRestController.java
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/controller/AdminController.java
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/domain/AbstractEntity.java
 /home/yuri/Dropbox/2023/2023-1/Desenvolvimento de software web/Trabalho 3/Web1-RestAPI/src/main/java/br/ufscar/dc/dsw/controller/SiteRestController.java

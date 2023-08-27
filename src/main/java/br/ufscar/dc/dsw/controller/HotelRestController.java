@@ -30,17 +30,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufscar.dc.dsw.domain.Promocao;
 import br.ufscar.dc.dsw.domain.Site;
+import br.ufscar.dc.dsw.domain.Hotel;
 import br.ufscar.dc.dsw.service.spec.IPromocaoService;
 import br.ufscar.dc.dsw.service.spec.ISiteService;
+import br.ufscar.dc.dsw.service.spec.IHotelService;
 
 @CrossOrigin
 @RestController
-public class SiteRestController {
+public class HotelRestController {
 	
 	@Autowired
-	private ISiteService sservice;
+	private IHotelService hservice;
 	@Autowired
 	private IPromocaoService pservice;
+	@Autowired
+	private ISiteService sservice;
 	
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -50,73 +54,71 @@ public class SiteRestController {
 		}
 	}
 	
-	private void parse(Site site, JSONObject json) {
+	private void parse(Hotel hotel, JSONObject json) {
 
 		Object id = json.get("id");
 		if (id != null) {
 			if (id instanceof Integer) {
-				site.setId(((Integer) id).longValue());
+				hotel.setId(((Integer) id).longValue());
 			} else {
-				site.setId((Long) id);
+				hotel.setId((Long) id);
 			}
 		}
+
+		if(json.get("nome")!=null)
+			hotel.setNome((String) json.get("nome"));
 		
-		site.setNome((String) (json.get("nome")!=null?json.get("nome"):site.getNome()));
-		site.setEmail((String) (json.get("email")!=null?json.get("email"):site.getEmail()));
-		site.setSenha((String) (json.get("senha")!=null?json.get("senha"):site.getSenha()));
-		site.setTelefone((String) (json.get("telefone")!=null?json.get("telefone"):site.getTelefone()));
-		site.setURL((String) (json.get("url")!=null?json.get("url"):site.getURL()));
+		if(json.get("cidade")!=null)
+			hotel.setCidade((String) json.get("cidade"));
+		
+		if(json.get("cnpj")!=null)
+			hotel.setCNPJ((String) json.get("cnpj"));
+		
+		if(json.get("email")!=null)
+			hotel.setEmail((String) json.get("email"));
+		
+		if(json.get("senha")!=null)
+			hotel.setSenha((String) json.get("senha"));
 	}
 	
-	//Parte do Rest
-	@GetMapping(path = "/sites")
-	public ResponseEntity<List<Site>> lista() {
-		List<Site> lista = sservice.buscarTodos();
+	@GetMapping(path = "/hoteis")
+	public ResponseEntity<List<Hotel>> lista() {
+		List<Hotel> lista = hservice.buscarTodos();
 		if (lista.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping(path = "/sites/{id}")
-	public ResponseEntity<Site> lista(@PathVariable("id") long id) {
-		Site site = sservice.buscarPorId(id);
-		if (site == null) {
+	@GetMapping(path = "/hoteis/{id}")
+	public ResponseEntity<Hotel> lista(@PathVariable("id") long id) {
+		Hotel hotel= hservice.buscarPorId(id);
+		if (hotel == null) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(site);
+		return ResponseEntity.ok(hotel);
 	}
-
 	
-	@PostMapping(path = "/sites")
-	@ResponseBody
-	public ResponseEntity<Site> cria(@RequestBody JSONObject json) {
-		try {
-			if (isJSONValid(json.toString())) {
-				Site site = new Site();
-				parse(site, json);
-				sservice.salvar(site);
-				return ResponseEntity.ok(site);
-			} else {
-				return ResponseEntity.badRequest().body(null);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+	@GetMapping(path = "/hoteis/cidades/{cidade}")
+	public ResponseEntity<List<Hotel>> lista(@PathVariable("cidade") String cidade) {
+		List<Hotel> lista= hservice.buscarTodosPorCidade(cidade);
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(lista);
 	}
 	
-	@PutMapping(path = "/sites/{id}")
-	public ResponseEntity<Site> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
+	@PutMapping(path = "/hoteis/{id}")
+	public ResponseEntity<Hotel> atualiza(@PathVariable("id") long id, @RequestBody JSONObject json) {
 		try {
 			if (isJSONValid(json.toString())) {
-				Site site = sservice.buscarPorId(id);
-				if (site == null) {
+				Hotel hotel = hservice.buscarPorId(id);
+				if (hotel == null) {
 					return ResponseEntity.notFound().build();
 				} else {
-					parse(site, json);
-					sservice.salvar(site);
-					return ResponseEntity.ok(site);
+					parse(hotel, json);
+					hservice.salvar(hotel);
+					return ResponseEntity.ok(hotel);
 				}
 			} else {
 				return ResponseEntity.badRequest().body(null);
@@ -126,15 +128,16 @@ public class SiteRestController {
 		}
 	}
 	
-	@DeleteMapping(path = "/sites/{id}")
+	@DeleteMapping(path = "/hoteis/{id}")
 	public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
-
-		Site site = sservice.buscarPorId(id);
-		if (site == null) {
+		Hotel hotel = hservice.buscarPorId(id);
+		if (hotel == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			sservice.excluir(id);
+			hservice.excluir(id);
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
+
 }

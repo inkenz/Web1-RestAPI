@@ -100,7 +100,7 @@ public class PromocoesHotelApplication {
 			h.setUsuario(u);
 			hotelDAO.save(h);
 			
-			h = new Hotel("hotel7@hotel.com", encoder.encode("123"), "67.232.101/0001-09", "Hotel 7", "Macapá");
+			h = new Hotel("hotel7@hotel.com", encoder.encode("123"), "67.232.101/0001-09", "Hotel 7", "Limeira");
 			
 			u = new Usuario();
 			u.setEmail(h.getEmail());
