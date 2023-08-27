@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//import br.ufscar.dc.dsw.domain.Cidade;
 import br.ufscar.dc.dsw.domain.Promocao;
 import br.ufscar.dc.dsw.domain.Site;
 import br.ufscar.dc.dsw.service.spec.IPromocaoService;
@@ -61,4 +63,6 @@ public class SiteController {
 		
 		return sservice.buscarPorEmail(email).getURL();
 	}
+	
+
 }
