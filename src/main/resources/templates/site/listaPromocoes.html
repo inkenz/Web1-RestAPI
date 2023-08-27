@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{promocao.lista.message}"></title>
+</head>
+
+<body>
+	<div th:with="df=#{date.format}">
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th th:text="#{hotel.cnpj}"></th>
+					<th th:text="#{promocao.preco}"></th>
+					<th th:text="#{promocao.inicio}"></th>
+					<th th:text="#{promocao.fim}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="promocao : ${promocoes}">
+					<td th:text="${promocao.id}"></td>
+					<td th:text="${promocao.CNPJ}"></td>
+					<td th:text="${promocao.preco}"></td>
+					<td th:text="${#calendars.format(promocao.inicio, df)}"></td>
+				<td th:text="${#calendars.format(promocao.fim, df)}"></td>
+				</tr>
+			</tbody>
+	</table>
+	</div>
+</body>
+
+</html>

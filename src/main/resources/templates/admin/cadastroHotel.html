@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title th:text="#{hotel.cadastro.page}"></title>
+</head>
+
+<body>
+	<h1 th:text="#{hotel.cadastro.page}"></h1>
+	<form th:action="${hotel.id == null} ? @{/admin/salvarHotel} : @{/admin/editarHotel}" th:object="${hotel}"
+		method="POST">
+		<label th:text="#{hotel.nome}" for="nome"></label>
+			<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{nome}"
+				th:placeholder="#{hotel.nome}" th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
+
+			<div class="invalid-feedback">
+				<span th:errors="*{nome}"></span>
+			</div>
+			<label th:text="#{hotel.cnpj}" for="CNPJ"></label>
+			<input type="text" class="form-control" id="CNPJ" autofocus="autofocus" th:field="*{CNPJ}" autocomplete="off"
+				placeholder="__.___.___/____-__" th:readonly="${hotel.id != null}" maxlength="18" oninput="formatarCNPJ(this)"
+				th:classappend="${#fields.hasErrors('CNPJ')} ? is-invalid" />
+			<div class="invalid-feedback">
+				<span th:errors="*{CNPJ}"></span>
+			</div>
+			<label th:text="#{email}" for="email"></label>
+			<input type="text" class="form-control" id="email" autofocus="autofocus" th:field="*{email}"
+				autocomplete="off" th:placeholder="#{email}" th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
+
+			<div class="invalid-feedback">
+				<span th:errors="*{email}"></span>
+			</div>
+			<label th:text="#{senha}" for="senha"></label>
+			<input type="password" class="form-control" id="senha" autofocus="autofocus" th:field="*{senha}" autocomplete="off"
+				th:placeholder="#{senha}" th:classappend="${#fields.hasErrors('senha')} ? is-invalid" />
+
+			<div class="invalid-feedback">
+				<span th:errors="*{senha}"></span>
+			</div>
+			<label th:text="#{hotel.cidade}" for="cidade"></label>
+			<input type="text" class="form-control" id="cidade" autofocus="autofocus" th:field="*{cidade}"
+				th:placeholder="#{cidade}" th:classappend="${#fields.hasErrors('cidade')} ? is-invalid" />
+
+			<div class="invalid-feedback">
+				<span th:errors="*{cidade}"></span>
+			</div>
+
+			<input type="hidden" id="id" th:field="*{id}" />
+			<button type="submit" th:text="#{salvar.hotel}" class="btn btn-primary btn-sm"></button>
+	</form>
+	<script>
+		function formatarCNPJ(input){
+			let cnpj = input.value.replace(/\D/g, '');
+			
+			if(cnpj.length > 0){
+				cnpj = cnpj.replace(/^(\d{2})(\d)/,'$1.$2')
+				cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+			}
+			
+			input.value = cnpj;
+		}
+	</script>
+</body>
+
+</html>

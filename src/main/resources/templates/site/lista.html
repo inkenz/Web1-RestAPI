@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{site.lista.message}"></title>
+</head>
+
+<body>
+	<div class="container" id="listagem">
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<a th:href="@{/admin/cadastrarSite}" th:text="#{admin.cadastrar.site}"></a></br>
+		</div>
+		<!--<div th:replace="fragments/alert"></div>
+	-->
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-sm">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th th:text="#{site.nome}"></th>
+						<th th:text="#{site.URL}"></th>
+						<th th:text="#{site.telefone}"></th>
+						<th th:text="#{acao}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="site : ${sites}">
+						<td th:text="${site.id}"></td>
+						<td th:text="${site.nome}"></td>
+						<td th:text="${site.URL}"></td>
+						<td th:text="${site.telefone}"></td>
+
+						<td>
+
+							<div sec:authorize="hasRole('ROLE_ADMIN')">
+								<a th:href="@{/admin/editarSite/{id} (id=${site.id}) }"
+								th:text="#{admin.editar}">
+								</a> </br>
+								<a th:href="@{/admin/excluirSite/{id} (id=${site.id}) }"
+								th:text="#{admin.excluir}">
+								</a>
+							</div>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>

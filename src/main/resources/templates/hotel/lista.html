@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{hotel.lista.message}"></title>
+</head>
+
+<body>
+	<div class="container" id="listagem">
+		<label th:text="#{hotel.lista.filtro}"> 
+		</label>
+		<form th:action="@{/hotel/listar}" method="GET">
+			<select id="cidade" name="cidade">
+				<option value="" th:text="#{hotel.lista.cidades.todas}"></option>
+				<option th:each="cidade: ${cidades}" th:value="${cidade}" th:text="${cidade}"></option>
+			</select>
+			<button type="submit" th:text="#{hotel.filtrar}"></button>
+		</form>
+		
+		
+		
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<a th:href="@{/admin/cadastrarHotel}" th:text="#{admin.cadastrar.hotel}"></a></br>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-sm">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th th:text="#{hotel.nome}"></th>
+						<th th:text="#{hotel.cidade}"></th>
+						<th th:text="#{hotel.cnpj}"></th>
+						<th th:text="#{acao}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="hotel : ${hoteis}">
+						<td th:text="${hotel.id}"></td>
+						<td th:text="${hotel.nome}"></td>
+						<td th:text="${hotel.cidade}"></td>
+						<td th:text="${hotel.CNPJ}"></td>
+
+						<td>
+							<div sec:authorize="hasRole('ROLE_ADMIN')">
+								<a th:href="@{/admin/editarHotel/{id} (id=${hotel.id}) }" 
+								th:text="#{admin.editar}">	
+								</a> </br>
+								<a th:href="@{/admin/excluirHotel/{id} (id=${hotel.id}) }"
+								th:text="#{admin.excluir}">
+								</a>
+							</div>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>

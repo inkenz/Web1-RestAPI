@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title th:text="#{site.cadastro.page}"></title>
+</head>
+
+<body>
+	<h1 th:text="#{site.cadastro.page}"></h1>
+	<form th:action="${site.id == null} ? @{/admin/salvarSite} : @{/admin/editarSite}" th:object="${site}"
+		method="POST">
+		<label th:text="#{email}" for="email"></label>
+		<input type="text" class="form-control" id="email" autofocus="autofocus" th:field="*{email}"
+			autocomplete="off" th:placeholder="#{site.email}" th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
+
+		<div class="invalid-feedback">
+			<span th:errors="*{email}"></span>
+		</div>
+		<label th:text="#{senha}" for="senha"></label>
+		<input type="password" class="form-control" id="senha" autofocus="autofocus" th:field="*{senha}"
+			autocomplete="off" th:placeholder="#{senha}" th:classappend="${#fields.hasErrors('senha')} ? is-invalid" />
+
+		<div class="invalid-feedback">
+			<span th:errors="*{senha}"></span>
+		</div>
+		<label th:text="#{site.nome}" for="nome"></label>
+		<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{nome}"
+			th:placeholder="#{site.nome}" th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
+
+		<div class="invalid-feedback">
+			<span th:errors="*{nome}"></span>
+		</div>
+		<label th:text="#{site.URL}" for="URL"></label>
+		<input type="text" class="form-control" id="URL" autofocus="autofocus" th:field="*{URL}"
+			th:placeholder="#{site.URL}" th:readonly="${site.id != null}"
+			th:classappend="${#fields.hasErrors('URL')} ? is-invalid" />
+		<div class="invalid-feedback">
+			<span th:errors="*{URL}"></span>
+		</div>
+		<label th:text="#{site.telefone}" for="telefone"></label>
+		<input type="text" class="form-control" id="telefone" autofocus="autofocus" th:field="*{telefone}"
+			placeholder="(__) ____-____" data-mask="(00) 0000-0000" data-mask-reverse="true"
+			th:classappend="${#fields.hasErrors('telefone')} ? is-invalid" />
+		<div class="invalid-feedback">
+			<span th:errors="*{telefone}"></span>
+		</div>
+		<input type="hidden" id="id" th:field="*{id}" />
+		<button type="submit" th:text="#{salvar.site}" class="btn btn-primary btn-sm"></button>
+	</form>
+</body>
+
+</html>
