@@ -38,6 +38,12 @@ public class PromocaoService implements IPromocaoService {
 		
 		return lp;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Promocao> buscarTodos() {
+		
+		return pdao.findAll();
+	}
 
 
 	@Transactional(readOnly = true)

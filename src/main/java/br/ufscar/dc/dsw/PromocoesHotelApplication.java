@@ -144,8 +144,10 @@ public class PromocoesHotelApplication {
 			s3.setUsuario(u7);
 			siteDAO.save(s3);
 			
-			Promocao p1 = new Promocao(s1.getURL(),h1.getCNPJ(),1000, new Date(2023-1900,12,13), new Date(2023-1900,12,24));
+			Promocao p1 = new Promocao(s1.getURL(),h2.getCNPJ(),1000, new Date(2023-1900,12,13), new Date(2023-1900,12,24), s1, h2);
 			promocaoDAO.save(p1);
+			Promocao p2 = new Promocao(s3.getURL(),h1.getCNPJ(),1000, new Date(2023-1900,5,20), new Date(2023-1900,10,31), s3, h1);
+			promocaoDAO.save(p2);
 			
 			//List<Promocao> l1 = new ArrayList<Promocao>();
 			//l1.add(p1);

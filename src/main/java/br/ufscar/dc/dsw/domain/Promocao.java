@@ -66,12 +66,14 @@ public class Promocao  extends AbstractEntity<Long>{
 		return site;
 	}
 	public Promocao() {}
-	public Promocao(String URL, String CNPJ, float preco, Date inicio, Date fim){
+	public Promocao(String URL, String CNPJ, float preco, Date inicio, Date fim, Site site, Hotel hotel){
 		this.URL = URL;
 		this.CNPJ = CNPJ;
 		this.preco = preco;
 		this.inicio = inicio;
 		this.fim = fim;
+		this.site = site;
+		this.hotel = hotel;
 	}
 	/*
 	public long getId() {

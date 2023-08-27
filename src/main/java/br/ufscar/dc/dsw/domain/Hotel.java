@@ -49,8 +49,10 @@ public class Hotel extends AbstractEntity<Long>{
 	@Column(nullable = false, unique = false, length = 50)
     private String cidade;
     
+	/*
 	@OneToMany(targetEntity = Promocao.class, mappedBy = "hotel", fetch = FetchType.EAGER)
 	private List<Promocao> promocoes;
+	*/
 	
 	@OneToOne
 	private Usuario usuario;
@@ -116,12 +118,15 @@ public class Hotel extends AbstractEntity<Long>{
     public void setUsuario(Usuario user) {
     	this.usuario = user;
     }
+    
+    /*
     public List<Promocao> getPromocoes(){
     	return this.promocoes;
     }
     public void setPromocoes(List<Promocao> promocoes) {
     	this.promocoes = promocoes;
     }
+    */
     
     // PARA DEBUG
     /*

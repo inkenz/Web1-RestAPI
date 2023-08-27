@@ -50,8 +50,10 @@ public class Site extends AbstractEntity<Long>{
 	@Column(nullable = false, unique = false, length = 15)
 	private String telefone;
 	
+	/*
 	@OneToMany(targetEntity = Promocao.class, mappedBy = "site", fetch = FetchType.EAGER)
 	private Set<Promocao> promocoes;
+	*/
 	
 	@OneToOne
 	private Usuario usuario;
@@ -119,12 +121,15 @@ public class Site extends AbstractEntity<Long>{
     public void setUsuario(Usuario user) {
     	this.usuario = user;
     }
+    
+    /*
     public Set<Promocao> getPromocoes(){
     	return this.promocoes;
     }
     public void setPromocoes(Set<Promocao> promocoes) {
     	this.promocoes = promocoes;
     }
+    */
     
     // PARA DEBUG
     /*

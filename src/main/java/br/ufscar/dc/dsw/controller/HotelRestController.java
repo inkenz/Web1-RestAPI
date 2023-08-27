@@ -81,6 +81,24 @@ public class HotelRestController {
 			hotel.setSenha((String) json.get("senha"));
 	}
 	
+	@PostMapping(path = "/hoteis")
+	@ResponseBody
+	public ResponseEntity<Hotel> cria(@RequestBody JSONObject json) {
+		try {
+			if (isJSONValid(json.toString())) {
+				Hotel hotel = new Hotel();
+				parse(hotel, json);
+				hservice.salvar(hotel);
+				return ResponseEntity.ok(hotel);
+			} else {
+				return ResponseEntity.badRequest().body(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+		}
+	}
+	
 	@GetMapping(path = "/hoteis")
 	public ResponseEntity<List<Hotel>> lista() {
 		List<Hotel> lista = hservice.buscarTodos();
@@ -139,5 +157,42 @@ public class HotelRestController {
 		}
 	}
 	
+	@GetMapping(path = "/promocoes")
+	public ResponseEntity<List<Promocao>> listaPromocoes() {
+		List<Promocao> lista = pservice.buscarTodos();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping(path = "/promocoes/{id}")
+	public ResponseEntity<Promocao> listaPromocoes(@PathVariable("id") long id) {
+		Promocao promocao = pservice.buscarPorId(id);
+		if (promocao == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(promocao);
+	}
+	
+	@GetMapping(path = "/promocoes/hotel/{id}")
+	public ResponseEntity<List<Promocao>> listaPromocoesHotel(@PathVariable("id") long id) {
+		Hotel hotel = hservice.buscarPorId(id);
+		List<Promocao> lista = pservice.buscarTodosPorHotel(hotel.getCNPJ());
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping(path = "/promocoes/sites/{id}")
+	public ResponseEntity<List<Promocao>> listaPromocoesSite(@PathVariable("id") long id) {
+		Site site = sservice.buscarPorId(id);
+		List<Promocao> lista = pservice.buscarTodosPorSite(site.getURL());
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
 
 }
