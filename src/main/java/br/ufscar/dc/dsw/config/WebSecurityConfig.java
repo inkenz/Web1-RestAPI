@@ -43,20 +43,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+				//Controladores REST
+				.antMatchers("/sites", "/hoteis", "/promocoes").permitAll()
+				.antMatchers("/sites/{\\d+}", "hoteis/{\\d+}").permitAll()
+				.antMatchers("/promocoes/{\\d+}").permitAll()
+				.antMatchers("/hoteis/cidades/{\\w+}").permitAll()
+				.antMatchers("/promocoes/sites/{\\d+}").permitAll()
+				.antMatchers("/promocoes/hoteis/{\\d+}").permitAll()
+				
 				.antMatchers("/", "/index", "/error").permitAll()
 				.antMatchers("/login/**", "/site/listar", "/site/lista", "/image/**", "/hotel/listar","/hotel/lista").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/hotel/**").hasRole("HOTEL")
 				.antMatchers("/site/**").hasRole("SITE")
+				
 				.anyRequest().authenticated()
+			.and()	
+				.formLogin().loginPage("/login").permitAll()
 			.and()
-				.formLogin()
-				.loginPage("/login")
-				.permitAll()
-			.and()
-				.logout()
-				.logoutSuccessUrl("/")
-				.permitAll();
+				.logout().logoutSuccessUrl("/").permitAll();
 	}
 	
 }
